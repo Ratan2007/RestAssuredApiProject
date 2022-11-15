@@ -19,28 +19,28 @@ public class HTTPRequest {
 		
 		int id;
 		
-		@Test(priority=1,enabled=false)
+		@Test(priority=1,enabled=true)
 		void getUsers()
 		{
 			given()
 					
 			.when()
-				.get("https://reqres.in/api/users?page=2")
+				.get("https://dummy.restapiexample.com/api/v1/employees")
 					
 			.then()
 				.statusCode(200)
-				.body("page",equalTo(2))
 				.log().all();
 				
 		}
 		
 
-		@Test(priority=2)
+		//@Test(priority=2)
 		void createUser()
 		{
 			HashMap data=new HashMap();
 			data.put("name","Hafiz");
-			data.put("job","tester");
+			data.put("salary","120000");
+			data.put("age","55");
 			
 			
 			id=given()
@@ -48,7 +48,7 @@ public class HTTPRequest {
 				.body(data)
 				
 			.when()
-				.post("https://reqres.in/api/users")
+				.post("https://dummy.restapiexample.com/api/v1/create")
 				.jsonPath().getInt("id");
 			
 //			.then()
@@ -58,13 +58,14 @@ public class HTTPRequest {
 			
 		}
 		
-		@Test(priority=3,dependsOnMethods= {"createUser"})
+		//@Test(priority=3,dependsOnMethods= {"createUser"})
 		void updateUser()
 		{
 
 			HashMap data=new HashMap();
-			data.put("name","Hafiz");
-			data.put("job","dev");
+			data.put("name","Hafizur");
+			data.put("salary","150000");
+			data.put("age","45");
 			
 			
 			given()
@@ -72,7 +73,8 @@ public class HTTPRequest {
 				.body(data)
 				
 			.when()
-				.put("https://reqres.in/api/users/"+id)
+			.put("https://dummy.restapiexample.com/api/v1/update/"+id)
+				//.put("https://reqres.in/api/users/"+id)
 					
 			.then()
 				.statusCode(200)
@@ -80,13 +82,14 @@ public class HTTPRequest {
 			
 		}
 		
-		@Test(priority=4)
+		//@Test(priority=4)
 		void deleteUser()
 		{
 			given()
 				
 			.when()
-				.delete("https://reqres.in/api/users/"+id)
+			.delete("https://dummy.restapiexample.com/api/v1/delete/"+id)
+				//.delete("https://reqres.in/api/users/"+id)
 			
 			.then()
 				.statusCode(204)
